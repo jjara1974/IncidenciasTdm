@@ -24,9 +24,14 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "src/css/simple-sidebar.css",
+              "src/vendor/bootstrap/css/bootstrap.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/vendor/bootstrap/js/bootstrap.bundle.min.js",
+              "src/vendor/jquery/jquery.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -119,6 +124,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "Incidencias"
+    }
+  },
+  "defaultProject": "Incidencias",
+  "cli": {
+    "analytics": false
+  }
 }
