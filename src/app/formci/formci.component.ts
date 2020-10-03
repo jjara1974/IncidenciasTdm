@@ -11,6 +11,7 @@ export class FormciComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    let title="pepe";
   }
 
 }

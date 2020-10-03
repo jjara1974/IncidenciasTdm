@@ -1,210 +1,65 @@
-
-
 <style>
   body {
-margin-top: 30px;
-background-color: rgba(86,61,124,.05);
+    font-family: sans-serif;
+    background-image: radial-gradient(circle, #b94bf8, #3a1957);
+    background-repeat: no-repeat;
+    margin: 0;
+    color: #eee;
+    height: 100vh;
+  }
+.formax{
+display: flex;
+
 }
-
-a,
-a:hover {
-color: #212529;
-}
-
-a:hover {
-text-decoration: none;
-}
-
-.block {
-height: 350px;
-background: rgba(86,61,124,.15);
-margin-bottom: 30px;
-}
-
-.label {
-font-size: .85rem;
-font-weight: bold;
-}
-
-
-
-
- </style>
-
-
-
-<div class="container">
-  <div class="row">
+.contenedor{
   
-    <div class="col-12 col-md-6 col-xl-6">
-      <a class="d-flex flex-column align-items-end justify-content-between p-3 block" href="">
-        
-        <div class="form-group col-5">
-          <label for="rama">Imputable a:</label>
-          <select class="form-control" id="rama">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-          </select>
-        </div>
+  display:flex;
+}
 
-        <div class="form-group col-7">
-          <label for="exampleFormControlTextarea1">Example textarea</label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-      </div>
-      </a>
-    </div>
-
-    <div class="col-12 col-md-6 col-xl-6">
-      <a class="d-flex flex-column align-items-end justify-content-between p-3 block" href="">
-        <div class="label">Label</div>
-        <div class="description">The new common language will be more simple and regular than the existing European languages.</div>
-      
-       
-      </a>
-    </div>
-  </div>
-</div>
+form{
+  padding-top: 75px;
+  padding-right: 60px;
+}
 
 
+</style>
 
-
-
-
-<div class="d-flex flex-row  bd-highlight "> 
-<form col>
-
-  
-
-    <div class="d-flex flex-row bd-highlight mb-3">  
-    <div class="form-group col-5">
-      <label for="rama">Imputable a:</label>
-      <select class="form-control" id="rama">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-      </select>
-    </div>
-    <div class="form-group col-12">
-        <label for="exampleFormControlTextarea1">Example textarea</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-    </div>
+<div class="contenedor">
+<form>
+  <div class="form-group formax">
+    <label for="rama">Imputable a:</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword1">
     </div>
     
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword1">
+  </div>
+  <div class="form-group form-check">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
 
-    <div class="d-flex flex-row bd-highlight mb-3">  
-    <div class="form-group col-5">
-      <label for="sistema">Sistema:</label>
-      <select class="form-control" id="sistema">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
-      </select>
+<form>
+  <div class="form-group formax">
+    <label for="fecha">Fecha:  </label>
+    <input type="date" class="form-control" id="fecha">
+    <label for="hora">Hora:</label>
+    <input type="time" class="form-control" id="hora">
     </div>
-    <div class="form-group col-12">
-        <label for="exampleFormControlTextarea1">Example textarea</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-      </div>
-    </div>
-
-
-    <div class="form-group">
-        <label for="subsistema">SubSistema:</label>
-        <select class="form-control" id="subsistema">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="exampleFormControlTextarea1">Example textarea</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-      </div>
-      <div class="form-group">
-        <label for="equipo">Equipo:</label>
-        <select class="form-control" id="equipo">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-        </select>
-      </div> 
-      <div class="form-group">
-        <label for="exampleFormControlTextarea1">Example textarea</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-      </div>
-      <div class="form-group">
-        <label for="localizacion">Localización:</label>
-        <select class="form-control" id="localizacion">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-        </select>
-      </div> 
-      <div class="form-group">
-        <label for="exampleFormControlTextarea1">Example textarea</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-      </div>
-      <div class="form-group">
-        <label for="via">Equipo:</label>
-        <select class="form-control" id="via">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-        </select>
-      </div> 
-      <div class="form-group">
-        <label for="exampleFormControlTextarea1">Example textarea</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-      </div>
-    <div class="form-group">
-      <label for="exampleFormControlTextarea1">Example textarea</label>
-      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-    </div>
-
-
-
-
-
-
-
-  </form>
-
-  <div class="w-25"></div>
-  
-  <form col>
-
-  
-
-        <div class="d-flex flex-row bd-highlight mb-3">  
-        <div class="form-group col-5">
-          <label for="rama">Imputable a:</label>
-          <select class="form-control" id="rama">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
-          </select>
-        </div>
-        <div class="form-group col-12">
-            <label for="exampleFormControlTextarea1">Example textarea</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-          </div>
-        </div>
-
-    </form>
+    
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword1">
+  </div>
+  <div class="form-group form-check">
+    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
 </div>
