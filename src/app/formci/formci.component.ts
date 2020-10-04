@@ -6,12 +6,15 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './formci.component.html',
   styleUrls: ['./formci.component.css']
 })
-export class FormciComponent implements OnInit {
-
+export class FormciComponent {
+  //implements OnInit {
+titlex="hola caracola ssssssssssssssssssssssssssssssssss";
   constructor() { }
 
-  ngOnInit(): void {
-    let title="pepe";
-  }
+ 
+
+  /*ngOnInit(): void {
+    
+  }*/
 
 }
