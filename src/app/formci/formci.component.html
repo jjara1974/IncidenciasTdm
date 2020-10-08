@@ -59,7 +59,7 @@
         <div class="form-group formax ">
           <label for="rama" class="col-3">Imputable a:</label>
           <select class="form-control col-9" id="rama" #rama="ngModel" [(ngModel)]="nuevaincidencia.COD_RAMA_DETINC"
-            [ngModelOptions]="{standalone: true}" (ngModelChange)="sistemaunico($event)">
+            [ngModelOptions]="{standalone: true}" (ngModelChange)="sistemaunico()">
             <option *ngFor="let niveloptionrama of listaramaunica" [ngValue]="niveloptionrama.COD_RAMA">
               {{niveloptionrama.COD_RAMA}}
               {{niveloptionrama.DESC_RAMA}}
@@ -71,39 +71,38 @@
           <label for="sistema" class="col-3">Sistema:</label>
           <select class="form-control col-9" id="sistema" #sistema="ngModel"
             [(ngModel)]="nuevaincidencia.COD_SISTEMA_DETINC" [ngModelOptions]="{standalone: true}"
-            (ngModelChange)="subsistemaunico($event)">
-            <option *ngFor="let niveloptionsistema of listasistemaaunico" [ngValue]="niveloptionsistema.COD_NIVEL1">
+            (ngModelChange)="subsistemaunico()">
+            <option *ngFor="let niveloptionsistema of listasistemaunico" [ngValue]="niveloptionsistema.COD_NIVEL1">
               {{niveloptionsistema.COD_NIVEL1}}
               {{niveloptionsistema.DESC_NIVEL1}}
             </option>
           </select>
         </div>
 
-        
-
         <div class="form-group formax ">
-          <label for="equipo" class="col-3">Equipo:</label>
-          <select class="form-control col-9" id="subsistema" #sistema="ngModel"
+          <label for="subsistema" class="col-3">Subsistema:</label>
+          <select class="form-control col-9" id="subsistema" #subsistema="ngModel"
             [(ngModel)]="nuevaincidencia.COD_SUBSISTEMA_DETINC" [ngModelOptions]="{standalone: true}"
-            (ngModelChange)="equipounico($event)">
+            (ngModelChange)="equipounico()">
             <option *ngFor="let niveloptionsubsistema of listasubsistemaunico" [ngValue]="niveloptionsubsistema.COD_NIVEL2">
-              {{niveloptionsistema.COD_NIVEL2}}
-              {{niveloptionsistema.DESC_NIVEL2}}
+              {{niveloptionsubsistema.COD_NIVEL2}}
+              {{niveloptionsubsistema.DESC_NIVEL2}}
             </option>
           </select>
         </div>
 
         <div class="form-group formax ">
-          <label for="subsistema" class="col-3">Equipo::</label>
-          <select class="form-control col-9" id="subsistema">
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-            <option>5</option>
+          <label for="equipo" class="col-3">Equipo:</label>
+          <select class="form-control col-9" id="equipo" #sistema="ngModel"
+            [(ngModel)]="nuevaincidencia.COD_EQUIPO_DETINC" [ngModelOptions]="{standalone: true}"
+            (ngModelChange)="equipounico()">
+            <option *ngFor="let niveloptionequipo of listaequipounico" [ngValue]="niveloptionequipo.COD_NIVEL2">
+              {{niveloptionequipo.COD_NIVEL3}}
+              {{niveloptionequipo.DESC_NIVEL3}}
+            </option>
           </select>
-
         </div>
+
 
         <div class="form-group formax ">
           <label for="localizacion" class="col-3">Localización:</label>
@@ -174,7 +173,7 @@
   </div>
   <div class="card-footer">
     <div class="form-group">
-      <button type="submit" class="btn btn-primary btn btn-success " (click)="onselectrama('2')">Guardar</button>
+      <button type="submit" class="btn btn-primary btn btn-success " >Guardar</button>
       <button type="submit" class="btn btn-primary  btn btn-danger ">Cancelar</button>
     </div>
   </div>

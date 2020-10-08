@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { onErrorResumeNext } from 'rxjs';
 import { Incidencia } from '../models/incidencia'
 import { Nivel } from '../models/nivel'
+import {ServiciociService } from '../services/servicioci.service';
 
 @Component({
   selector: 'app-formci',
@@ -14,13 +15,13 @@ export class FormciComponent implements OnInit {
   public niveles: Nivel[] = [];
   public nuevaincidencia: Incidencia;
   public listaramaunica: Nivel[] = [];
-  public listasistemaaunico: Nivel[] = [];
-  public listasubsistemaaunico: Nivel[] =[]
+  public listasistemaunico: Nivel[] = [];
+  public listasubsistemaunico: Nivel[] =[]
   public listaequipounico: Nivel[] =[]
   
 
 
-  constructor() { }
+  constructor(public servicioCi: ServiciociService) { }
 
   ngOnInit(): void {
 
@@ -773,63 +774,74 @@ export class FormciComponent implements OnInit {
     nivelesx.forEach(e => {
       if (e.COD_RAMA != eanterior) {
         this.listaramaunica.push(e)
-        console.log("INSTERA" + e.COD_RAMA)
+      /////////////////////////  console.log("INSTERA" + e.COD_RAMA)
       }
       eanterior = e.COD_RAMA;
     })
-    console.log("COLEGA" + this.nuevaincidencia.COD_SISTEMA_DETINC)
+   ////////////// console.log("COLEGA" + this.nuevaincidencia.COD_SISTEMA_DETINC)
     this.nuevaincidencia.COD_SISTEMA_DETINC = "";
+    this.nuevaincidencia.COD_SUBSISTEMA_DETINC = "";
+    this.nuevaincidencia.COD_EQUIPO_DETINC = "";
    
   }
 
   // Extrae datos para cargar el desplegable SISTEMA de la vista  
-  sistemaunico(codrama: string) {
-    this.listasistemaaunico = [];
+ // sistemaunico(codrama: string) {
+   sistemaunico() {
+    this.listasistemaunico = [];
     let eanterior: string;
-    this.niveles.filter(e => e.COD_RAMA == codrama).forEach(e => {
+    this.niveles.filter(e => e.COD_RAMA == this.nuevaincidencia.COD_RAMA_DETINC).forEach(e => {
       if (e.COD_NIVEL1 != eanterior) {
-        this.listasistemaaunico.push(e)
-        console.log("INSTESI" + e.COD_NIVEL1)
+        this.listasistemaunico.push(e)
+        ///////////////////////////console.log("INSTESI" + e.COD_NIVEL1)
       }
       eanterior = e.COD_NIVEL1;
     })
 
+    this.nuevaincidencia.COD_SISTEMA_DETINC = "";
     this.nuevaincidencia.COD_SUBSISTEMA_DETINC = "";
+    this.nuevaincidencia.COD_EQUIPO_DETINC = "";
     this.ramaunica(this.niveles);
   }
 
   // Extrae datos para cargar el desplegable SUBSISTEMA de la vista  
-  subsistemaunico(codsistema: string) {
+  //subsistemaunico(codsistema: string) {
+    subsistemaunico() {
     
-    this.listasubsistemaaunico = [];
+    this.listasubsistemaunico = [];
     let eanterior: string;
-    this.niveles.filter(e => e.COD_RAMA == this.nuevaincidencia.COD_RAMA_DETINC   ||  e.COD_NIVEL1 == this.nuevaincidencia.COD_SISTEMA_DETINC   ).forEach(e => {
-        console.log("loco "+ e.COD_NIVEL2)
+    console.log("=>"+ this.nuevaincidencia.COD_RAMA_DETINC + "--" + this.nuevaincidencia.COD_SISTEMA_DETINC  )
+     this.niveles.filter(e => e.COD_RAMA == this.nuevaincidencia.COD_RAMA_DETINC   &&  e.COD_NIVEL1 == this.nuevaincidencia.COD_SISTEMA_DETINC   ).forEach(e => {
+        ////////////////////console.log("loco "+ e.COD_NIVEL2)
       if (e.COD_NIVEL2 != eanterior) {
-        this.listasubsistemaaunico.push(e)
-        console.log("INSTESUBSI" + e.COD_NIVEL2)
+        this.listasubsistemaunico.push(e)
+       ///////////////////////// console.log("INSTESUBSI" + e.COD_NIVEL2)
       }
       eanterior = e.COD_NIVEL2;
     })
+    
+    this.nuevaincidencia.COD_SUBSISTEMA_DETINC = "";
+    this.nuevaincidencia.COD_EQUIPO_DETINC = "";
     //this.ramaunica(this.niveles);
     //this.sistemaunico(this.nuevaincidencia.COD_RAMA_DETINC);
 
 
   }
 
-  equipounico(codsubsistema: string) {
+  //equipounico(codsubsistema: string) {
+    equipounico() {
+      
     this.listaequipounico = [];
     let eanterior: string;
-    this.niveles.filter(e => e.COD_RAMA == this.nuevaincidencia.COD_RAMA_DETINC   ||  e.COD_NIVEL1 == this.nuevaincidencia.COD_SISTEMA_DETINC || e.COD_NIVEL2 == this.nuevaincidencia.COD_SUBSISTEMA_DETINC ).forEach(e => {
+    this.niveles.filter(e => e.COD_RAMA == this.nuevaincidencia.COD_RAMA_DETINC   && e.COD_NIVEL1 == this.nuevaincidencia.COD_SISTEMA_DETINC && e.COD_NIVEL2 == this.nuevaincidencia.COD_SUBSISTEMA_DETINC ).forEach(e => {
       if (e.COD_NIVEL3 != eanterior) {
         this.listaequipounico.push(e)
-        console.log("INSTEEQUI" + e.COD_NIVEL3)
+        //////////////////////////////console.log("INSTEEQUI" + e.COD_NIVEL3)
       }
       eanterior = e.COD_NIVEL3;
     })
   
-  
-  
+   
   }
 
 

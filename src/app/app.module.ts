@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormciComponent } from './formci/formci.component';
+import {ServiciociService } from './services/servicioci.service';
 
 
 @NgModule({
@@ -16,7 +17,7 @@ import { FormciComponent } from './formci/formci.component';
     AppRoutingModule,
     FormsModule
   ],
-  providers: [],
+  providers: [ServiciociService],
   bootstrap: [AppComponent,FormciComponent]
 })
 export class AppModule { }
