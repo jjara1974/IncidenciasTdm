@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { FormciComponent } from './formci/formci.component';
 import {ServiciociService } from './services/servicioci.service';
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule 
+    HttpClientModule,
+    ReactiveFormsModule  
   ],
   providers: [ServiciociService],
   bootstrap: [AppComponent,FormciComponent]

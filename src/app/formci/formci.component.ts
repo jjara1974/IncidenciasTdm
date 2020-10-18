@@ -1,10 +1,11 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { onErrorResumeNext, Subscription } from 'rxjs';
 import { Incidencia } from '../models/incidencia'
 import { Nivel } from '../models/nivel'
 import { ServiciociService } from '../services/servicioci.service';
-
+import { Lugar } from '../models/lugar'
+import { Via } from '../models/via'
 
 
 @Component({
@@ -20,18 +21,23 @@ export class FormciComponent implements OnInit {
   public listasistemaunico: Nivel[] = [];
   public listasubsistemaunico: Nivel[] = []
   public listaequipounico: Nivel[] = []
- 
+  public lugares: Lugar[]=[];
+  public vias: Via[]=[];
+  public date: Date = new Date();
+  
 
 
-  constructor(public servicioCi: ServiciociService) { }
+  constructor(public servicioCi: ServiciociService) { 
+    this.nuevaincidencia = new Incidencia("", "", "", "", "", null, null, "", null, null, "", "", "", "", "", null, null, false, null, null, "", 0, "", "", "", false, false, false, false, "", 0, false, false, "", false, false, false, false, false, false, "", "", "", "", "", "", "", false, "", 0)
+    this.nuevaincidencia.FECAP_DETINC = new Date(new Date().getTime());
+  }
 
   ngOnInit(): void {
 
-    this.nuevaincidencia = new Incidencia("", "", "", "", "", new Date(), new Date(), "", new Date(), new Date(), "", "", "", "", "", new Date(), new Date(), false, new Date(), new Date(), "", 0, "", "", "", false, false, false, false, "", 0, false, false, "", false, false, false, false, false, false, "", "", "", "", "", "", "", false, "", 0),
-   
-    this.getniveles(); //Carga los niveles desde la api y rellena el array de destino
-
-
+    
+    this.getNiveles(); //Carga los niveles desde la api y rellena el array de destino
+    alert(this.nuevaincidencia.FECSO_DETINC);
+    //console.log(this.nuevaincidencia)
   }
 
 
@@ -46,6 +52,7 @@ export class FormciComponent implements OnInit {
       }
       eanterior = e.COD_RAMA;
     })
+    this.listaramaunica.sort();
     this.nuevaincidencia.COD_SISTEMA_DETINC = "";
     this.nuevaincidencia.COD_SUBSISTEMA_DETINC = "";
     this.nuevaincidencia.COD_EQUIPO_DETINC = "";
@@ -62,6 +69,15 @@ export class FormciComponent implements OnInit {
       }
       eanterior = e.COD_NIVEL1;
     })
+    this.listasistemaunico.sort(function (a, b) {
+      if (a.COD_NIVEL1N > b.COD_NIVEL1N) {
+        return 1;
+      }
+      if (a.COD_NIVEL1N < b.COD_NIVEL1N) {
+        return -1;
+      }
+      return 0;
+    });
 
     this.nuevaincidencia.COD_SISTEMA_DETINC = "";
     this.nuevaincidencia.COD_SUBSISTEMA_DETINC = "";
@@ -83,6 +99,15 @@ export class FormciComponent implements OnInit {
       }
       eanterior = e.COD_NIVEL2;
     })
+    this.listasubsistemaunico.sort(function (a, b) {
+      if (a.COD_NIVEL2N > b.COD_NIVEL2N) {
+        return 1;
+      }
+      if (a.COD_NIVEL2N < b.COD_NIVEL2N) {
+        return -1;
+      }
+      return 0;
+    });
 
     this.nuevaincidencia.COD_SUBSISTEMA_DETINC = "";
     this.nuevaincidencia.COD_EQUIPO_DETINC = "";
@@ -102,19 +127,39 @@ export class FormciComponent implements OnInit {
       }
       eanterior = e.COD_NIVEL3;
     })
-
+    this.listaequipounico.sort(function (a, b) {
+      if (a.COD_NIVEL3N > b.COD_NIVEL3N) {
+        return 1;
+      }
+      if (a.COD_NIVEL3N < b.COD_NIVEL3N) {
+        return -1;
+      }
+      return 0;
+    });
 
   }
 
 
 
 
-  getniveles() {
+  getNiveles() {
 
     this.servicioCi.getNiveles().subscribe(
       result => {
         this.niveles = result;
+         
+        this.niveles.forEach(e=>{
+
+           e.COD_RAMAN= parseInt(e.COD_RAMA);
+           e.COD_NIVEL1N=parseInt(e.COD_NIVEL1);
+           e.COD_NIVEL2N=parseInt(e.COD_NIVEL2);
+           e.COD_NIVEL3N=parseInt(e.COD_NIVEL3);
+        }) 
+
         this.ramaunica(this.niveles)
+        this.getLugares(); 
+       
+       
       },  //Al terminar la carga de datos lanza la carga del array de destino
       error => {
         console.log(<any>error);
@@ -124,6 +169,39 @@ export class FormciComponent implements OnInit {
   }
 
 
+  getLugares(){
+    this.servicioCi.getLugares().subscribe( 
+      result=>{
+         this.lugares = result;
+         this.getVia();
+        },  //Al terminar la carga de datos lanza la carga del array de destino
+      error => {
+        console.log(<any>error);
+      }
+    );
+
+    }
+
+    getVia(){
+      this.servicioCi.getVia().subscribe( 
+        result=>{
+           this.vias = result;
+         },  //Al terminar la carga de datos lanza la carga del array de destino
+        error => {
+          console.log(<any>error);
+        }
+      );
+  
+      }
+  
+
+
+    guardarCi(){
+
+
+      console.log(this.nuevaincidencia)
+
+    }
 
   /*captura(){
     

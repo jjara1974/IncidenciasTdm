@@ -36,12 +36,20 @@ export class ServiciociService {
 
 getIncidencias(): Observable<any>{
   return this.httpClient.get(this.REST_API_SERVER + "incidencia");
+
 }
 
 getNiveles(): Observable<any>{
   return this.httpClient.get(this.REST_API_SERVER + "niveles");
 }
 
+getLugares(): Observable<any>{
+  return this.httpClient.get(this.REST_API_SERVER + "lugares")
+}
+
+getVia(): Observable<any>{
+  return this.httpClient.get(this.REST_API_SERVER + "vias")
+}
 
 
 }
