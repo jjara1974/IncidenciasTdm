@@ -1,15 +1,11 @@
-import { THIS_EXPR, ThrowStmt } from '@angular/compiler/src/output/output_ast';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
-import { concat, merge, onErrorResumeNext, Subscription } from 'rxjs';
+import { onErrorResumeNext, Subscription } from 'rxjs';
 import { Incidencia } from '../models/incidencia'
 import { Nivel } from '../models/nivel'
 import { ServiciociService } from '../services/servicioci.service';
 import { Lugar } from '../models/lugar'
 import { Via } from '../models/via'
-import { concatAll } from 'rxjs/operators';
-import { of } from 'rxjs';
-
-
 
 
 @Component({
@@ -19,7 +15,7 @@ import { of } from 'rxjs';
 })
 export class FormciComponent implements OnInit {
   public incidencias: Incidencia[] = [];
-  public niveles: Nivel[]=[];
+  public niveles: Nivel[];
   public nuevaincidencia: Incidencia;
   public listaramaunica: Nivel[] = [];
   public listasistemaunico: Nivel[] = [];
@@ -29,8 +25,6 @@ export class FormciComponent implements OnInit {
   public vias: Via[]=[];
   public date: Date = new Date();
   public variablechachi="pepelopez"
-  public datosServicio: any;
-
 
 
   constructor(public servicioCi: ServiciociService) { 
@@ -40,31 +34,10 @@ export class FormciComponent implements OnInit {
 
   ngOnInit(): void {
 
-
-  //Estructura ConcatAll que encadena observables esperando el resultado de cada uno antes de ejecutar el siguiente  
-    const source = of(this.servicioCi.getLugares(), this.servicioCi.getVia(), this.servicioCi.getNiveles())
-    const example = source.pipe(concatAll());
-    example.subscribe(result => {
-
-      if (this.lugares.length == 0) {
-        this.lugares = result;
-      } else if (this.vias.length == 0) {
-        this.vias = result;
-      } else if (this.niveles.length == 0) {
-        this.niveles = result;
-        this.niveles.forEach(e => {
-          e.COD_RAMAN = parseInt(e.COD_RAMA);
-          e.COD_NIVEL1N = parseInt(e.COD_NIVEL1);
-          e.COD_NIVEL2N = parseInt(e.COD_NIVEL2);
-          e.COD_NIVEL3N = parseInt(e.COD_NIVEL3);
-        })
-        this.ramaunica(this.niveles);
-      };
-
-    }
-    );
-
-  //Fin estructura ConcatAll
+    
+    this.getNiveles(); //Carga los niveles desde la api y rellena el array de destino
+    alert(this.nuevaincidencia.FECSO_DETINC);
+    //console.log(this.nuevaincidencia)
   }
 
 
@@ -182,7 +155,11 @@ export class FormciComponent implements OnInit {
            e.COD_NIVEL2N=parseInt(e.COD_NIVEL2);
            e.COD_NIVEL3N=parseInt(e.COD_NIVEL3);
         }) 
-          
+
+        this.ramaunica(this.niveles)
+        this.getLugares(); 
+       
+       
       },  //Al terminar la carga de datos lanza la carga del array de destino
       error => {
         console.log(<any>error);
@@ -196,7 +173,7 @@ export class FormciComponent implements OnInit {
     this.servicioCi.getLugares().subscribe( 
       result=>{
          this.lugares = result;
-       
+         this.getVia();
         },  //Al terminar la carga de datos lanza la carga del array de destino
       error => {
         console.log(<any>error);
