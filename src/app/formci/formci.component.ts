@@ -1,9 +1,10 @@
 import { THIS_EXPR, ThrowStmt } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
-import { concat, merge, onErrorResumeNext, Subscription } from 'rxjs';
+import { concat, merge, Observable, onErrorResumeNext, Subscription } from 'rxjs';
 import { Incidencia } from '../models/incidencia'
 import { Nivel } from '../models/nivel'
 import { ServiciociService } from '../services/servicioci.service';
+import { UtilidadesService } from '../services/utilidades.service';
 import { Lugar } from '../models/lugar'
 import { Via } from '../models/via'
 import { concatAll } from 'rxjs/operators';
@@ -28,25 +29,32 @@ export class FormciComponent implements OnInit {
   public lugares: Lugar[]=[];
   public vias: Via[]=[];
   public date: Date = new Date();
-  public variablechachi="pepelopez"
   public datosServicio: any;
+  public lastIncidencias: any[]=[];
+  public lastIncidencia: string;
 
-
-
-  constructor(public servicioCi: ServiciociService) { 
+  constructor(public servicioCi: ServiciociService, public servicioUtilidades: UtilidadesService) { 
     this.nuevaincidencia = new Incidencia("", "", "", "", "", null, null, "", null, null, "", "", "", "", "", null, null, false, null, null, "", 0, "", "", "", false, false, false, false, "", 0, false, false, "", false, false, false, false, false, false, "", "", "", "", "", "", "", false, "", 0)
     this.nuevaincidencia.FECAP_DETINC = new Date(new Date().getTime());
   }
 
   ngOnInit(): void {
 
-
   //Estructura ConcatAll que encadena observables esperando el resultado de cada uno antes de ejecutar el siguiente  
-    const source = of(this.servicioCi.getLugares(), this.servicioCi.getVia(), this.servicioCi.getNiveles())
+    const source = of(this.servicioCi.getLastIncidencias(),this.servicioCi.getLugares(), this.servicioCi.getVia(), this.servicioCi.getNiveles())
     const example = source.pipe(concatAll());
     example.subscribe(result => {
-
-      if (this.lugares.length == 0) {
+ 
+      if (this.lastIncidencias.length == 0) {
+        this.lastIncidencias=result;
+        this.lastIncidencias.forEach(e => {
+        let maxvalor: string =  e.MAXCODDETINC
+        maxvalor = maxvalor.substr(5,6);
+        console.log(maxvalor + "  " + e.MAXCODDETINC);
+        this.nuevaincidencia.COD_DETINC = "CN" +  new Date().getFullYear() + this.servicioUtilidades.completaCeros((parseInt(maxvalor) +1),6) // Calcula COD_DETINC NUEVO 
+        });
+        
+      } else if (this.lugares.length == 0) {
         this.lugares = result;
       } else if (this.vias.length == 0) {
         this.vias = result;
@@ -64,7 +72,7 @@ export class FormciComponent implements OnInit {
     }
     );
 
-  //Fin estructura ConcatAll
+  //Fin estructura ConcatAll 
   }
 
 
@@ -217,6 +225,21 @@ export class FormciComponent implements OnInit {
   
       }
   
+
+
+      getLastIncidencias(){
+        this.servicioCi.getLastIncidencias().subscribe( 
+          result=>{
+             this.lastIncidencia = result;
+           },  //Al terminar la carga de datos lanza la carga del array de destino
+          error => {
+            console.log(<any>error);
+          }
+        );
+    
+        }
+
+
 
 
     guardarCi(){

@@ -1,0 +1,49 @@
+body {
+    font-family: sans-serif;
+    background-image: radial-gradient(circle, #b94bf8, #3a1957);
+    background-repeat: no-repeat;
+    margin: 0;
+    color: #eee;
+    height: 100vh;
+  }
+
+  .formax {
+    display: flex;
+
+  }
+
+  .contenedor1 {
+    width: 600px;
+
+
+
+  }
+
+  .contenedor2 {
+    width: 600px;
+    padding-left: 200px;
+
+  }
+
+  form {
+    width: 1200px;
+    padding-top: 50px;
+    padding-right: 60px;
+    display: flex;
+    align-content: space-between;
+
+  }
+
+  .card-header {
+    background-color: #7BD447;
+  }
+
+  .tarjeta1 {
+
+    width: 600;
+  }
+
+  .btn {
+    width: 300px;
+    margin-left: 50px;
+  }

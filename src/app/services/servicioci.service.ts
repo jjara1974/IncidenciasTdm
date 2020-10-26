@@ -39,6 +39,13 @@ getIncidencias(): Observable<any>{
 
 }
 
+getLastIncidencias(): Observable<any>{
+
+  return this.httpClient.get(this.REST_API_SERVER + "Lastincidencia");
+
+  
+}
+
 getNiveles(): Observable<any>{
   return this.httpClient.get(this.REST_API_SERVER + "niveles");
 }
@@ -50,6 +57,10 @@ getLugares(): Observable<any>{
 getVia(): Observable<any>{
   return this.httpClient.get(this.REST_API_SERVER + "vias")
 }
+
+
+
+
 
 
 }

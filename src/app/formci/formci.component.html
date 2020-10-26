@@ -1,57 +1,4 @@
-<style>
-  body {
-    font-family: sans-serif;
-    background-image: radial-gradient(circle, #b94bf8, #3a1957);
-    background-repeat: no-repeat;
-    margin: 0;
-    color: #eee;
-    height: 100vh;
-  }
-
-  .formax {
-    display: flex;
-
-  }
-
-  .contenedor1 {
-    width: 600px;
-
-
-
-  }
-
-  .contenedor2 {
-    width: 600px;
-    padding-left: 200px;
-
-  }
-
-  form {
-    width: 1200px;
-    padding-top: 50px;
-    padding-right: 60px;
-    display: flex;
-    align-content: space-between;
-
-  }
-
-  .card-header {
-    background-color: #7BD447;
-  }
-
-  .tarjeta1 {
-
-    width: 600;
-  }
-
-  .btn {
-    width: 300px;
-    margin-left: 50px;
-  }
-</style>
-
-
-<H1>{{variablechachi}}</H1>
+<H1>{{lastIncidencia}}</H1>
 <div class="card">
   <div class="card-header">Alta de Incidencias</div>
   <div class="card-body">
@@ -129,7 +76,7 @@
 
         </div>
         <label for="descripcion">Descripción</label>
-        <textarea type="text" class="form-control " id="descripcion"> </textarea>
+        <textarea type="text" class="form-control " name="descripcion" [ngModel]="nuevaincidencia.DESC_DETINC" (ngModelChange)="nuevaincidencia.DESC_DETINC=$event"> </textarea>
       </div>
 
    
@@ -142,11 +89,11 @@
             <div class="card-body">
 
               <div class="form-group formax">
-                <label for="fechas" class="col-2">Fecha a: </label>
-                <input type="date" class="form-control" [ngModel]="nuevaincidencia.FECAP_DETINC | date:'yyyy-MM-dd'"   (ngModelChange)="nuevaincidencia.FECAP_DETINC = $event" [ngModelOptions]="{standalone: true}">
+                <label for="fechaap" class="col-2">Fecha a: </label>
+                <input type="date" class="form-control" name="fechaap" [ngModel]="nuevaincidencia.FECAP_DETINC | date:'yyyy-MM-dd'"   (ngModelChange)="nuevaincidencia.FECAP_DETINC = $event" >
                 <!-- <input class="form-control" #fecap="ngModel"  [(ngModel)]="nuevaincidencia.FECAP_DETINC" type="date" placeholder="Fecha Solicitud" >-->
-                <label for="hora" class="col-2">Hora:</label>
-                <input type="time" class="form-control col-3" id="hora">
+                <label for="horaap" class="col-2">Hora:</label>
+                <input type="time" class="form-control col-3" name="horaap" [ngModel]="nuevaincidencia.HORAAP_DETINC"   (ngModelChange)="nuevaincidencia.HORAAP_DETINC= $event" >
               </div>
             </div>
           </div>
@@ -157,11 +104,11 @@
             <div class="card-body">
 
               <div class="form-group formax" >
-                <label for="fechas" class="col-2">Fecha a: </label>
-                <input type="date" name=fecci class="form-control" [(ngModel)]="nuevaincidencia.FECAP_DETINC">
-                <input type="date" class="form-control" [ngModel]="nuevaincidencia.FECCI_DETINC | date:'yyyy-MM-dd'"   (ngModelChange)="nuevaincidencia.FECCI_DETINC = $event" [ngModelOptions]="{standalone: true}">
-                <label for="hora" class="col-2">Hora:</label>
-                <input type="time" class="form-control col-3" id="hora">
+                <label for="fechaci" class="col-2">Fecha a: </label>
+                <input type="date" class="form-control" name="fechaci" [ngModel]="nuevaincidencia.FECCI_DETINC | date:'yyyy-MM-dd'"   (ngModelChange)="nuevaincidencia.FECCI_DETINC = $event" >
+                <!-- <input class="form-control" #fecap="ngModel"  [(ngModel)]="nuevaincidencia.FECAP_DETINC" type="date" placeholder="Fecha Solicitud" >-->
+                <label for="horaci" class="col-2">Hora:</label>
+                <input type="time" class="form-control col-3" name="horaci" [ngModel]="nuevaincidencia.HORACI_DETINC"   (ngModelChange)="nuevaincidencia.HORACI_DETINC= $event" >
               </div>
             </div>
           </div>

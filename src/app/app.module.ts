@@ -4,12 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormciComponent } from './formci/formci.component';
-import {ServiciociService } from './services/servicioci.service';
+import { ServiciociService } from './services/servicioci.service';
+import { UtilidadesService } from './services/utilidades.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [
+  declarations: [ 
     AppComponent,
     FormciComponent
   ],
@@ -20,7 +21,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     ReactiveFormsModule  
   ],
-  providers: [ServiciociService],
+  providers: [ServiciociService,UtilidadesService],
   bootstrap: [AppComponent,FormciComponent]
 })
 export class AppModule { }
