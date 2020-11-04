@@ -1,21 +1,26 @@
 import { Injectable } from '@angular/core';
-import { HttpClient,HttpErrorResponse  } from '@angular/common/http';
+import { HttpClient,HttpErrorResponse,HttpHeaders,HttpResponse } from '@angular/common/http';
 import {  throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-
+import { Incidencia } from '../models/incidencia'
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServiciociService {
-
-
   private REST_API_SERVER = "http://localhost:3000/api/";
   public datos: any;
+  private httpOptions: any;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) { 
+   this.httpOptions = {
+      headers: new HttpHeaders({'Content-Type': 'application/json'}),
+      observe: 'response',
+    };
+
+  }
 
 //--Manejador de Errores HttpClient
    handleError(error: HttpErrorResponse) {
@@ -59,7 +64,11 @@ getVia(): Observable<any>{
 }
 
 
-
+addIncidencia(incidencia: Incidencia): Observable<any> {
+	
+	return this.httpClient.post<Incidencia>(this.REST_API_SERVER + "insertincidencia", incidencia, this.httpOptions);
+		
+} 
 
 
 

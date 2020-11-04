@@ -1,16 +1,15 @@
 <H1>{{nuevaincidencia.COD_DETINC}}</H1>
-<form id="CiForm" [formGroup]="form" (ngSubmit)="submet()"> 
 <div class="card">
   <div class="card-header">Alta de Incidencias</div>
-  <div class="card-body ">
-   
-   
+  <div class="card-body">
+
+    <form  id="CiForm" [formGroup]="form" (ngSubmit)="submet()">
       <div class="contenedor1">
 
         <div class="form-group formax ">
           <label for="rama" class="col-3">Imputable a:</label>
-          <select class="form-control col-9" formControlName="rama"   [(ngModel)]="nuevaincidencia.COD_RAMA_DETINC"
-           (ngModelChange)="sistemaunico()">
+          <select class="form-control col-9" id="rama" #rama="ngModel" [(ngModel)]="nuevaincidencia.COD_RAMA_DETINC"
+            [ngModelOptions]="{standalone: true}" (ngModelChange)="sistemaunico()">
             <option *ngFor="let niveloptionrama of listaramaunica" [ngValue]="niveloptionrama.COD_RAMA">
               {{niveloptionrama.COD_RAMA}}
               {{niveloptionrama.DESC_RAMA}}
@@ -20,7 +19,8 @@
 
         <div class="form-group formax ">
           <label for="sistema" class="col-3">Sistema:</label>
-          <select class="form-control col-9" id="sistema" formControlName="sistema" [(ngModel)]="nuevaincidencia.COD_SISTEMA_DETINC" 
+          <select class="form-control col-9" id="sistema" #sistema="ngModel"
+            [(ngModel)]="nuevaincidencia.COD_SISTEMA_DETINC" [ngModelOptions]="{standalone: true}"
             (ngModelChange)="subsistemaunico()">
             <option *ngFor="let niveloptionsistema of listasistemaunico" [ngValue]="niveloptionsistema.COD_NIVEL1">
               {{niveloptionsistema.COD_NIVEL1}}
@@ -31,8 +31,8 @@
 
         <div class="form-group formax ">
           <label for="subsistema" class="col-3">Subsistema:</label>
-          <select class="form-control col-9" id="subsistema" formControlName="subsistema"
-            [(ngModel)]="nuevaincidencia.COD_SUBSISTEMA_DETINC" 
+          <select class="form-control col-9" id="subsistema" #subsistema="ngModel"
+            [(ngModel)]="nuevaincidencia.COD_SUBSISTEMA_DETINC" [ngModelOptions]="{standalone: true}"
             (ngModelChange)="equipounico()">
             <option *ngFor="let niveloptionsubsistema of listasubsistemaunico" [ngValue]="niveloptionsubsistema.COD_NIVEL2">
               {{niveloptionsubsistema.COD_NIVEL2}}
@@ -43,8 +43,8 @@
 
         <div class="form-group formax ">
           <label for="equipo" class="col-3">Equipo:</label>
-          <select class="form-control col-9" id="equipo" formControlName="equipo"
-            [(ngModel)]="nuevaincidencia.COD_EQUIPO_DETINC" 
+          <select class="form-control col-9" id="equipo" #sistema="ngModel"
+            [(ngModel)]="nuevaincidencia.COD_EQUIPO_DETINC" [ngModelOptions]="{standalone: true}"
             (ngModelChange)="equipounico()">
             <option *ngFor="let niveloptionequipo of listaequipounico" [ngValue]="niveloptionequipo.COD_NIVEL2">
               {{niveloptionequipo.COD_NIVEL3}}
@@ -56,8 +56,8 @@
 
         <div class="form-group formax ">
           <label for="localizacion" class="col-3">Localización:</label>
-          <select class="form-control col-9" id="localizacion" formControlName="localizacion"
-          [(ngModel)]="nuevaincidencia.CODLUGAR_DETINC">
+          <select class="form-control col-9" id="localizacion" #lugar="ngModel" 
+          [(ngModel)]="nuevaincidencia.CODLUGAR_DETINC" [ngModelOptions]="{standalone: true}">
           <option *ngFor="let lugar of lugares" [ngValue]="lugar.COD_LUGAR">
              {{lugar.NOM_LUGAR}}
           </option>
@@ -67,8 +67,8 @@
 
         <div class="form-group formax ">
           <label for="via" class="col-3">Via:</label>
-          <select class="form-control col-9" id="via" formControlName ="via"
-          [(ngModel)]="nuevaincidencia.CODVIA_DETINC" >
+          <select class="form-control col-9" id="via" #lugar="ngModel" 
+          [(ngModel)]="nuevaincidencia.CODVIA_DETINC" [ngModelOptions]="{standalone: true}">
           <option *ngFor="let via of vias" [ngValue]="via.COD_VIA">
              {{via.NOM_VIA}}
           </option>
@@ -76,11 +76,11 @@
 
         </div>
         <label for="descripcion">Descripción</label>
-        <textarea type="text" class="form-control " formControlName="descripcion" [ngModel]="nuevaincidencia.DESC_DETINC" (ngModelChange)="nuevaincidencia.DESC_DETINC=$event"> </textarea>
+        <textarea type="text" class="form-control " name="descripcion" [ngModel]="nuevaincidencia.DESC_DETINC" (ngModelChange)="nuevaincidencia.DESC_DETINC=$event"> </textarea>
       </div>
 
    
-      <div class="form-group contenedor2">
+      <div class=" form-group contenedor2">
 
 
         <div class="card-column">
@@ -90,7 +90,7 @@
 
               <div class="form-group formax">
                 <label for="fechaap" class="col-4">Fecha: </label>
-                <input type="datetime-local" class="form-control" formControlName="fechaap" [ngModel]="nuevaincidencia.FECAP_DETINC"   (ngModelChange)="nuevaincidencia.FECAP_DETINC = $event" >
+                <input type="datetime-local" class="form-control" name="fechaap" [ngModel]="nuevaincidencia.FECAP_DETINC | date:'yyyy-MM-ddThh:mm:ss'"   (ngModelChange)="nuevaincidencia.FECAP_DETINC = $event" >
                 <!-- <input class="form-control" #fecap="ngModel"  [(ngModel)]="nuevaincidencia.FECAP_DETINC | date:'yyyy-MM-dd'" type="date" placeholder="Fecha Solicitud" >-->
                <!-- <label for="horaap" class="col-2">Hora:</label>
                 <input type="time" class="form-control col-3" name="horaap" [ngModel]="nuevaincidencia.HORAAP_DETINC"   (ngModelChange)="nuevaincidencia.HORAAP_DETINC= $event" >-->
@@ -105,7 +105,7 @@
 
               <div class="form-group formax" >
                 <label for="fechaci" class="col-4">Fecha: </label>
-                <input type="datetime-local" class="form-control" formControlName="fechaci" [ngModel]="nuevaincidencia.FECCI_DETINC"   (ngModelChange)="nuevaincidencia.FECCI_DETINC = $event" >
+                <input type="datetime-local" class="form-control" name="fechaci" [ngModel]="nuevaincidencia.FECCI_DETINC  | date:'yyyy-MM-ddThh:mm:ss' "   (ngModelChange)="nuevaincidencia.FECCI_DETINC = $event" >
            <!-- <label for="horaci" class="col-2">Hora:</label>
                 <input type="time" class="form-control col-3" name="horaci" [ngModel]="nuevaincidencia.HORACI_DETINC"   (ngModelChange)="nuevaincidencia.HORACI_DETINC= $event" > -->
               </div>
@@ -114,16 +114,14 @@
         </div>
 
       </div>
-    
+    </form>
 
   </div>
   <div class="card-footer">
     <div class="form-group">
-      <!--!  <button (click)="guardarCi()" type="submit" class="btn btn-primary btn btn-success " >Guardar</button>-->
-      <button type="submit" class="btn btn-primary  btn btn-danger ">Guardar</button>
-      <button type="submit" class="btn btn-primary  btn btn-danger ">Cancelar</button>
+     <!--  <button (click)="guardarCi()" type="submit" class="btn btn-primary btn btn-success" [disabled]="formGroup.invalid" >Guardar</button> -->
+     <button type="submit" class="btn btn-primary  btn btn-danger ">Guardar</button>
+     <button  class="btn btn-primary  btn btn-danger ">Cancelar</button>
     </div>
   </div>
 </div>
-
-</form>

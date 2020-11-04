@@ -9,9 +9,7 @@ import { Lugar } from '../models/lugar'
 import { Via } from '../models/via'
 import { concatAll } from 'rxjs/operators';
 import { of } from 'rxjs';
-import {FormBuilder, Validators} from '@angular/forms'
-
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -35,24 +33,11 @@ export class FormciComponent implements OnInit {
   public datosServicio: any;
   public lastIncidencias: any[] = [];
   public lastIncidencia: string;
-  public form;
-  constructor(public servicioCi: ServiciociService, public servicioUtilidades: UtilidadesService, private formBuilder: FormBuilder) {
+
+  constructor(public servicioCi: ServiciociService, public servicioUtilidades: UtilidadesService) {
     this.nuevaincidencia = new Incidencia("", "", "", "", "", null, null, "", null, null, "", "", "", "", "", null, null, false, null, null, "", 0, "", "", "", false, false, false, false, "", 0, false, false, "", false, false, false, false, false, false, "", "", "", "", "", "", "", false, "", 0)
     //this.nuevaincidencia = new Incidencia("", "", "", "", "", null, null, "", null, null, "", "", "", "", "", null, null, false, null, null, "", 0, "", "", "", false, false, false, false, "", 0, false, false, "", false, false, false, false, false, false, "", "", "", "", "", "", "", false, "", 0)
     //this.nuevaincidencia.FECAP_DETINC = new Date(new Date().getTime());
-    this.form = formBuilder.group({
-      rama: ['', Validators.required],
-      sistema: ['', Validators.required],
-      subsistema: ['', Validators.required], //, Validators.email
-      equipo: ['', Validators.required],
-      localizacion: ['', Validators.required],
-      via: ['', Validators.required],
-      descripcion: ['', Validators.required],
-      fechaap: ['', Validators.required],
-      fechaci: ['', Validators.required],
-      
- 
-    });
 
   }
 
@@ -294,12 +279,11 @@ export class FormciComponent implements OnInit {
 
 
 submet(){
-  if (this.form.valid) {
-    console.log("pppp:" + this.form.value)
-  }
-  else{
-    alert("FILL ALL FIELDS")
-  }
+
+ 
+  
+
+
 }
 
   /*captura(){
