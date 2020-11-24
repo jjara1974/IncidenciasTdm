@@ -1,0 +1,119 @@
+<h1>{{formCI.value.COD_DETINC}}</h1>
+<form id="FormCIId" [formGroup]="formCI" (ngSubmit)="submet()"> 
+<div class="card">
+  <div class="card-header font-weight-bold ">Alta de Incidencias</div>
+  <div class="card-body ">
+   
+   
+      <div class="contenedor1">
+      
+         <div class="form-group formax ">
+          <label for="cod_rama_detinc" class="col-3">Imputable a:</label>
+          <select class="form-control col-9" formControlName="COD_RAMA_DETINC"  
+           (change)="sistemaunico()">
+            <option *ngFor="let niveloptionrama of listaramaunica" [ngValue]="niveloptionrama.COD_RAMA">
+              {{niveloptionrama.COD_RAMA}}
+              {{niveloptionrama.DESC_RAMA}}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group formax ">
+          <label for="cod_sistema_detinc" class="col-3">Sistema:</label>
+          <select class="form-control col-9" id="cod_sistema_detinc" formControlName="COD_SISTEMA_DETINC"
+          (change)="subsistemaunico()">
+            <option *ngFor="let niveloptionsistema of listasistemaunico" [ngValue]="niveloptionsistema.COD_NIVEL1">
+              {{niveloptionsistema.COD_NIVEL1}}
+              {{niveloptionsistema.DESC_NIVEL1}}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group formax ">
+          <label for="cod_subsistema_detinc" class="col-3">Subsistema:</label>
+          <select class="form-control col-9" id="cod_subsistema_detinc" formControlName="COD_SUBSISTEMA_DETINC"
+          (change)="equipounico()">
+            <option *ngFor="let niveloptionsubsistema of listasubsistemaunico" [ngValue]="niveloptionsubsistema.COD_NIVEL2">
+              {{niveloptionsubsistema.COD_NIVEL2}}
+              {{niveloptionsubsistema.DESC_NIVEL2}}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group formax ">
+          <label for="cod_equipo_detinc" class="col-3">Equipo:</label>
+          <select class="form-control col-9" id="cod_equipo_detinc" formControlName="COD_EQUIPO_DETINC"
+          (change)="equipounico()">
+            <option *ngFor="let niveloptionequipo of listaequipounico" [ngValue]="niveloptionequipo.COD_NIVEL2">
+              {{niveloptionequipo.COD_NIVEL3}}
+              {{niveloptionequipo.DESC_NIVEL3}}
+            </option>
+          </select>
+        </div>
+
+
+        <div class="form-group formax ">
+          <label for="cod_lugar_detinc" class="col-3">Localización:</label>
+          <select class="form-control col-9" id="cod_lugar_detinc" formControlName="CODLUGAR_DETINC" >
+          <option *ngFor="let lugar of lugares" [ngValue]="lugar.COD_LUGAR">
+             {{lugar.NOM_LUGAR}}
+          </option>
+          </select>
+
+        </div>
+
+        <div class="form-group formax ">
+          <label for="cod_via_detinc" class="col-3">Via:</label>
+          <select class="form-control col-9" id="cod_via_detinc" formControlName ="CODVIA_DETINC" >
+          <option *ngFor="let via of vias" [ngValue]="via.COD_VIA">
+             {{via.NOM_VIA}}
+          </option>
+          </select>
+
+        </div>
+        <label for="DESC_DETINC">Descripción</label>
+        <textarea type="text" class="form-control " formControlName="DESC_DETINC" ></textarea>
+      </div>
+
+   
+      <div class="form-group contenedor2">
+
+
+        <div class="card-column">
+          <div class="card tarjeta1">
+            <div class="card-header font-weight-bold">Apertura / Sistema Dañado o Inoperativo</div>
+            <div class="card-body">
+
+              <div class="form-group formax">
+                <label for="fecap_detinc" class="col-4">Fecha: </label>
+                <input type="datetime-local" class="form-control" formControlName="FECAP_DETINC" >
+             </div>
+            </div>
+          </div>
+
+
+          <div class="card tarjeta1">
+            <div class="card-header font-weight-bold">Sistema Reparado / Operativo (PCC)</div>
+            <div class="card-body">
+
+              <div class="form-group formax" >
+                <label for="fecci_detinc" class="col-4">Fecha: </label>
+                <input type="datetime-local" class="form-control" formControlName="FECCI_DETINC"  >
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    
+
+  </div>
+  <div class="card-footer">
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary  btn btn-danger ">Guardar</button>
+      <button type="submit" class="btn btn-primary  btn btn-danger ">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+</form>

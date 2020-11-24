@@ -1,0 +1,60 @@
+<div class="card">
+    <div class="card-header font-weight-bold">Relación de Incidencias</div>
+    <div class="card-body ">
+
+
+<table class="table table-striped " >
+    
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col"  (click)="parametrosOrden('COD_DETINC')">Cod.CI</th>
+        <th scope="col"  (click)="parametrosOrden('HORAAP_DETINC')">Apertura</th>
+        <th scope="col"  (click)="parametrosOrden('DESC_RAMA')">Rama</th>
+        <th scope="col"  (click)="parametrosOrden('DESC_NIVEL1')">Sistema</th>
+        <th scope="col"  (click)="parametrosOrden('DESC_NIVEL2')">Subsistema</th>
+        <th scope="col"  (click)="parametrosOrden('DESC_NIVEL3')">Equipo</th>
+        <th scope="col"  (click)="parametrosOrden('LUGAR_DETINC')">Lugar</th>
+        <th scope="col"  (click)="parametrosOrden('VIA_DETINC')">Vía</th>
+        <th scope="col"  (click)="parametrosOrden('DESC_DETINC')">Descripción</th>
+     </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let incidencia of incidencias | pipeOrdena:orden:campo">
+        <td>{{incidencia.COD_DETINC}}</td>
+        <td>{{incidencia.HORAAP_DETINC}}</td>
+        <td>{{incidencia.DESC_RAMA}}</td>
+        <td>{{incidencia.DESC_NIVEL1}}</td>
+        <td>{{incidencia.DESC_NIVEL2}}</td>
+        <td>{{incidencia.DESC_NIVEL3}}</td>
+        <td>{{incidencia.LUGAR_DETINC}}</td>
+        <td>{{incidencia.VIA_DETINC}}</td>
+        <td>{{incidencia.DESC_DETINC}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+
+<div class="card-footer">
+    <ngb-pagination *ngIf="showPagination" [collectionSize]="totalItems" [(page)]="page"
+    (pageChange)="loadPage($event)"></ngb-pagination>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
