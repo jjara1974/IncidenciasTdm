@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RelciComponent } from './componentes/relci/relci.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { PipeOrdenaPipe } from './pipes/pipe-ordena.pipe';
+import { DatciComponent } from './componentes/datci/datci.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { PipeOrdenaPipe } from './pipes/pipe-ordena.pipe';
     FormciComponent,
     RelciComponent,
     PipeOrdenaPipe,
+    DatciComponent,
   
   ],
   imports: [

@@ -1,0 +1,45 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 10% 20% 10% 20% 10% 15%;
+    gap:1em 1em;
+    grid-template-areas:
+      "TituloTramoA TituloTramoA"
+      "TramoA TramoA"
+      "TituloTramoB TituloTramoB"
+      "TramoB TramoB"
+      "TituloTramoC TituloTramoC"
+      "TramoC TramoC";
+  }
+  
+  .TituloTramoA { 
+      grid-area: TituloTramoA; 
+      background-color: #7BD447; 
+      padding-left: 10px}
+  
+  .TramoA { grid-area: TramoA;padding-left: 20px; }
+  
+  .TituloTramoB { grid-area: TituloTramoB;background-color: #7BD447;padding-left: 10px }
+  
+  .TramoB { grid-area: TramoB;;padding-left: 20px; }
+  
+  .TituloTramoC { grid-area: TituloTramoC; background-color: #7BD447;padding-left: 10px}
+  
+  .TramoC { grid-area: TramoC;;padding-left: 20px; }
+  
+  .card{
+    padding-top: 50px;
+    width:90rem;
+  }
+
+  .card-header {
+   
+    background-color: #7BD447;
+  }
+
+ .btn{
+     border-color: black;
+ }
+
+  
+  

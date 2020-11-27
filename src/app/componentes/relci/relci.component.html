@@ -7,6 +7,7 @@
     
     <thead class="thead-dark">
       <tr>
+        <th scope="col"></th>
         <th scope="col"  (click)="parametrosOrden('COD_DETINC')">Cod.CI</th>
         <th scope="col"  (click)="parametrosOrden('HORAAP_DETINC')">Apertura</th>
         <th scope="col"  (click)="parametrosOrden('DESC_RAMA')">Rama</th>
@@ -37,11 +38,13 @@
 </div>
 
 
+
+
 <div class="card-footer">
    <!--<ngb-pagination *ngIf="showPagination" [collectionSize]="totalItems" [(page)]="page" (pageChange)="loadPage($event)"></ngb-pagination>-->
    <ngb-pagination *ngIf="showPagination" [collectionSize]="totalItems" [(page)]="page" [pageSize]="pageSize" ></ngb-pagination>
 </div>
-
+</div>
 
 
 
