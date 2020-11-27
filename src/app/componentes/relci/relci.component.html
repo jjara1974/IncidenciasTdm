@@ -3,7 +3,7 @@
     <div class="card-body ">
 
 
-<table class="table table-striped " >
+<table class="table table-striped" >
     
     <thead class="thead-dark">
       <tr>
@@ -19,7 +19,8 @@
      </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let incidencia of incidencias | pipeOrdena:orden:campo">
+      <tr *ngFor="let incidencia of incidencias  | pipeOrdena:orden:campo  | slice: (page-1) * pageSize: (page-1) * pageSize + pageSize">
+        <td ><button type="button" class="btn btn-black" (click)="editar(incidencia)" ><img src="../../../assets/images/editar.png"  width="20" height="20" ></button></td>
         <td>{{incidencia.COD_DETINC}}</td>
         <td>{{incidencia.HORAAP_DETINC}}</td>
         <td>{{incidencia.DESC_RAMA}}</td>
@@ -37,8 +38,8 @@
 
 
 <div class="card-footer">
-    <ngb-pagination *ngIf="showPagination" [collectionSize]="totalItems" [(page)]="page"
-    (pageChange)="loadPage($event)"></ngb-pagination>
+   <!--<ngb-pagination *ngIf="showPagination" [collectionSize]="totalItems" [(page)]="page" (pageChange)="loadPage($event)"></ngb-pagination>-->
+   <ngb-pagination *ngIf="showPagination" [collectionSize]="totalItems" [(page)]="page" [pageSize]="pageSize" ></ngb-pagination>
 </div>
 
 

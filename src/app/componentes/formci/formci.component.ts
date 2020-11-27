@@ -1,5 +1,5 @@
 import { THIS_EXPR, ThrowStmt } from '@angular/compiler/src/output/output_ast';
-import { Component, OnInit } from '@angular/core';
+import { Component,ViewChild,OnInit,TemplateRef } from '@angular/core';
 import { concat, merge, Observable, onErrorResumeNext, Subscription } from 'rxjs';
 import { Incidencia } from '../../models/incidencia'
 import { Nivel } from '../../models/nivel'
@@ -11,6 +11,7 @@ import { concatAll } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { FormBuilder, Validators } from '@angular/forms'
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -20,6 +21,10 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
   styleUrls: ['./formci.component.css']
 })
 export class FormciComponent implements OnInit {
+  @ViewChild("ModalGuardaCi", {static: false}) ModalGuardaCi: TemplateRef<any>;
+  public titulo: string;
+  public edita: number;
+  public paramincidencia: any;
   public incidencias: Incidencia[] = [];
   public niveles: Nivel[] = [];
   public nuevaincidencia: Incidencia;
@@ -35,10 +40,13 @@ export class FormciComponent implements OnInit {
   public lastIncidencia: string;
   public codCiNuevo: string;
   public formCI: any;
-  constructor(private route: ActivatedRoute, private router: Router, public servicioCi: ServiciociService, public servicioUtilidades: UtilidadesService, private formBuilder: FormBuilder) {
+  constructor(private modalService: NgbModal, private route: ActivatedRoute, private router: Router, public servicioCi: ServiciociService, public servicioUtilidades: UtilidadesService, private formBuilder: FormBuilder) {
     //LLL  this.nuevaincidencia = new Incidencia("", "", "", "", "", null, null, "", null, null, "", "", "", "", "", null, null, false, null, null, "", 0, "", "", "", false, false, false, false, "", 0, false, false, "", false, false, false, false, false, false, "", "", "", "", "", "", "", false, "", 0)
     //Validacion de datos del formulario reactivo
-    this.formCI = formBuilder.group({
+
+    this.titulo = "Alta de Incidencias";
+    this.paramincidencia = "";
+    this.formCI = this.formBuilder.group({
       COD_DETINC: ['',],
       COD_RAMA_DETINC: ['', Validators.required],
       COD_SISTEMA_DETINC: ['', Validators.required],
@@ -51,18 +59,32 @@ export class FormciComponent implements OnInit {
       FECCI_DETINC: ['',],
       HORAAP_DETINC: ['',],
       HORACI_DETINC: ['',],
+      UTEPCC_DETINC: [true],
+      PDFPCC_DETINC: [true],
+      EMAILPCC_DETINC: [true],
     });
+
+    this.route.params.subscribe((parametro) => {
+      this.paramincidencia = parametro;
+    });
+
+
 
   }
 
   ngOnInit(): void {
 
+
+
+
+
     //Estructura ConcatAll que encadena observables esperando el resultado de cada uno antes de ejecutar el siguiente  
     const source = of(this.servicioCi.getLastIncidencias(), this.servicioCi.getLugares(), this.servicioCi.getVia(), this.servicioCi.getNiveles())
     const example = source.pipe(concatAll());
     example.subscribe(result => {
-
+      //---------------
       if (this.lastIncidencias.length == 0) {
+        console.log("jj");
         this.lastIncidencias = result;
         this.lastIncidencias.forEach(e => {
           let maxvalor: string = e.MAXCODDETINC
@@ -70,8 +92,9 @@ export class FormciComponent implements OnInit {
           console.log(maxvalor + " =¿  " + e.MAXCODDETINC);
           //LLL  this.nuevaincidencia.COD_DETINC = "CN" + new Date().getFullYear() + this.servicioUtilidades.completaCeros((parseInt(maxvalor) + 1), 6) // Calcula COD_DETINC NUEVO 
           this.codCiNuevo = "CN" + new Date().getFullYear() + this.servicioUtilidades.completaCeros((parseInt(maxvalor) + 1), 6) // Calcula COD_DETINC NUEVO 
-          this.formCI.value.COD_DETINC =this.codCiNuevo;
+          //this.formCI.value.COD_DETINC = this.codCiNuevo;
           //LLL this.formCI.value.cod=(this.nuevaincidencia.COD_DETINC +"X")
+
         });
 
       } else if (this.lugares.length == 0) {
@@ -94,12 +117,61 @@ export class FormciComponent implements OnInit {
           e.COD_NIVEL2N = parseInt(e.COD_NIVEL2);
           e.COD_NIVEL3N = parseInt(e.COD_NIVEL3);
         })
-        this.ramaunica(this.niveles);
+
+
+
+
+        if (this.paramincidencia.COD_DETINC == undefined) { //
+
+          this.titulo = "Alta de Incidencias";
+          this.ramaunica(this.niveles);
+
+        } else {//
+
+          this.titulo = "Edición de Incidencias";
+
+          this.edita = 1;
+
+          console.log(this.paramincidencia.PDFPCC_DETINC + this.paramincidencia.EMAILPCC_DETINC + this.paramincidencia.UTEPCC_DETINC);
+
+          let ute, pdf, email;
+
+          if (this.paramincidencia.UTEPCC_DETINC == 'true') { ute = true } else { ute = false }
+          if (this.paramincidencia.PDFPCC_DETINC == 'true') { pdf = true } else { pdf = false }
+          if (this.paramincidencia.EMAILPCC_DETINC == 'true') { email = true } else { email = false }
+
+          this.formCI.patchValue(this.paramincidencia);//
+          this.formCI.controls['FECAP_DETINC'].patchValue(this.paramincidencia.FECAP_DETINC.substr(0, 16));
+          this.formCI.controls['FECCI_DETINC'].patchValue(this.paramincidencia.FECCI_DETINC.substr(0, 16));
+          this.formCI.controls['HORAAP_DETINC'].patchValue(this.paramincidencia.HORAAP_DETINC.substr(0, 16));
+          this.formCI.controls['HORACI_DETINC'].patchValue(this.paramincidencia.HORACI_DETINC.substr(0, 16));
+          this.formCI.controls['UTEPCC_DETINC'].patchValue(ute);
+          this.formCI.controls['PDFPCC_DETINC'].patchValue(pdf);
+          this.formCI.controls['EMAILPCC_DETINC'].patchValue(email);
+       
+
+
+
+          setTimeout(() => {
+            this.ramaunica(this.niveles);
+          }, 100);
+          setTimeout(() => {
+            this.sistemaunico();
+          }, 100);
+          setTimeout(() => {
+            this.subsistemaunico();
+          }, 100);
+          setTimeout(() => {
+            this.equipounico();
+            this.edita = 0;
+          }, 100);
+        }//
       };
-
-    }
-    );
-
+      //---------------------------------------------
+    });
+    console.log(this.formCI.value.UTEPCC_DETINC);
+    console.log(this.formCI.value.EMAILPCC_DETINC);
+    console.log(this.formCI.value.PDFPCC_DETINC);
     //Fin estructura ConcatAll 
   }
 
@@ -107,6 +179,7 @@ export class FormciComponent implements OnInit {
 
   // Extrae datos para cargar el desplegable RAMA de la vista
   ramaunica(nivelesx: Nivel[]) {
+
     this.listaramaunica = [];
     let eanterior: string;
     nivelesx.forEach(e => {
@@ -116,15 +189,17 @@ export class FormciComponent implements OnInit {
       eanterior = e.COD_RAMA;
     })
     this.listaramaunica.sort();
-    this.formCI.value.COD_SISTEMA_DETINC = "";
-    this.formCI.value.COD_SUBSISTEMA_DETINC = "";
-    this.formCI.value.COD_EQUIPO_DETINC = "";
+    if (this.edita != 1) {
+      this.formCI.value.COD_SISTEMA_DETINC = "";
+      this.formCI.value.COD_SUBSISTEMA_DETINC = "";
+      this.formCI.value.COD_EQUIPO_DETINC = "";
+    }
+
+
   }
 
   // Extrae datos para cargar el desplegable SISTEMA de la vista  
   sistemaunico() {
-    console.log("toma castañas");
-
     this.listasistemaunico = [];
     let eanterior: string;
     this.niveles.filter(e => e.COD_RAMA == this.formCI.value.COD_RAMA_DETINC).forEach(e => {
@@ -142,20 +217,22 @@ export class FormciComponent implements OnInit {
       }
       return 0;
     });
+    if (this.edita != 1) {
+      this.formCI.value.COD_SISTEMA_DETINC = "";
+      this.formCI.value.COD_SUBSISTEMA_DETINC = "";
+      this.formCI.value.COD_EQUIPO_DETINC = "";
+    }
 
-    this.formCI.value.COD_SISTEMA_DETINC = "";
-    this.formCI.value.COD_SUBSISTEMA_DETINC = "";
-    this.formCI.value.COD_EQUIPO_DETINC = "";
     this.ramaunica(this.niveles);
-    console.log(this.niveles);
+
   }
 
   // Extrae datos para cargar el desplegable SUBSISTEMA de la vista  
   subsistemaunico() {
     this.listasubsistemaunico = [];
     let eanterior: string;
-    console.log("=>" + this.formCI.value.COD_RAMA_DETINC + "--" + this.formCI.value.COD_SISTEMA_DETINC)
-    this.niveles.filter(e => e.COD_RAMA == this.formCI.value.COD_RAMA_DETINC  && e.COD_NIVEL1 == this.formCI.value.COD_SISTEMA_DETINC).forEach(e => {
+
+    this.niveles.filter(e => e.COD_RAMA == this.formCI.value.COD_RAMA_DETINC && e.COD_NIVEL1 == this.formCI.value.COD_SISTEMA_DETINC).forEach(e => {
 
       if (e.COD_NIVEL2 != eanterior) {
         this.listasubsistemaunico.push(e)
@@ -173,8 +250,10 @@ export class FormciComponent implements OnInit {
       return 0;
     });
 
-    this.formCI.value.COD_SUBSISTEMA_DETINC = "";
-    this.formCI.value.COD_EQUIPO_DETINC = "";
+    if (this.edita != 1) {
+      this.formCI.value.COD_SUBSISTEMA_DETINC = "";
+      this.formCI.value.COD_EQUIPO_DETINC = "";
+    }
 
 
   }
@@ -222,54 +301,44 @@ export class FormciComponent implements OnInit {
 
 
   submet() {
-    if (this.formCI.valid) {
-     // this.formCI.value.cod_detinc = this.codCiNuevo;
-     // console.log("pppp:" + this.formCI.value);
-     // console.log("pppp:" + this.formCI.value.cod_detinc);
-      this.guardarCi();
+    if (this.formCI.valid == false) {
+      alert("Faltan campos obligatorios por rellenar.");
+   
     }
     else {
-      alert("Faltan campos obligatorios por rellenar.");
+      this.modalService.open(this.ModalGuardaCi);
+      // this.guardarCi();
+      console.log("Todo correcto.");
     }
   }
 
 
 
   guardarCi() {
-
-
-    //console.log(this.nuevaincidencia)
-
-
-    this.formCI.value.horaap_detinc = this.formCI.value.FECAP_DETINC;
-    this.formCI.value.horaci_detinc = this.formCI.value.FECCI_DETINC;
-    this.formCI.value.COD_DETINC=this.codCiNuevo;
-
-    this.nuevaincidencia=this.formCI.value;
     
-    console.log("carola:" + this.codCiNuevo);
-    console.log("rrr2" +  this.formCI.value.COD_DETINC);
+    this.nuevaincidencia = this.formCI.value;
+
+    if (this.formCI.value.COD_DETINC == "") { this.formCI.value.COD_DETINC = this.codCiNuevo };
+
     let existe: boolean;
-   
-   // setTimeout(function () {
-    
-    
-    this.servicioCi.getBuscaIncidencia(this.nuevaincidencia.COD_DETINC).subscribe(result => {
-    let resultado: [] = result;
+
+    this.servicioCi.getBuscaIncidencia(this.paramincidencia.COD_DETINC).subscribe(result => {
+      let resultado: [] = result;
 
 
       if (resultado.length == 0) {
-        console.log("cuenta" + resultado.length)
         this.addincidencia();
       } else {
         this.updateincidencia();
       }
 
+      this.tramitarCI();
+
     });
 
 
 
-  //}, 3000);
+
 
   }
 
@@ -280,9 +349,7 @@ export class FormciComponent implements OnInit {
     this.servicioCi.addIncidencia(this.nuevaincidencia).subscribe(res => {
       let respuesta: any = res.body;
 
-      //console.log(artcl.name);
-      console.log(res.headers.get('Content-Type'));
-      console.log(res.headers.get('name'));
+
       if (respuesta != null) {
 
         if (respuesta.name == "RequestError") {
@@ -305,9 +372,6 @@ export class FormciComponent implements OnInit {
     this.servicioCi.updateIncidencia(this.nuevaincidencia).subscribe(res => {
       let respuesta: any = res.body;
 
-      //console.log(artcl.name);
-      console.log(res.headers.get('Content-Type'));
-      console.log(res.headers.get('name'));
       if (respuesta != null) {
 
         if (respuesta.name == "RequestError") {
@@ -325,6 +389,72 @@ export class FormciComponent implements OnInit {
 
   }
 
+  nuevaCi() {
+    this.paramincidencia = "";
+    this.lastIncidencias = [];
+    this.lugares = [];
+    this.vias = [];
+    this.niveles = [];
+    this.titulo = "Alta de Incidencias"
+    this.formCI = this.formBuilder.group({
+      COD_DETINC: ['',],
+      COD_RAMA_DETINC: ['', Validators.required],
+      COD_SISTEMA_DETINC: ['', Validators.required],
+      COD_SUBSISTEMA_DETINC: ['', Validators.required], //, Validators.email
+      COD_EQUIPO_DETINC: ['', Validators.required],
+      CODLUGAR_DETINC: ['', Validators.required],
+      CODVIA_DETINC: ['', Validators.required],
+      DESC_DETINC: ['', Validators.required],
+      FECAP_DETINC: ['', Validators.required],
+      FECCI_DETINC: ['',],
+      HORAAP_DETINC: ['',],
+      HORACI_DETINC: ['',],
+      UTEPCC_DETINC: [,],
+      PDFPCC_DETINC: [,],
+      EMAILPCC_DETINC: [,],
+    });
+
+    this.ngOnInit();
+    // this.ngOnInit();
+  }
+
+
+
+
+
+  tramitarCI(){
+
+     if(this.formCI.value.UTEPCC_DETINC==true){
+       this.envioUTE();
+     }   
+     if(this.formCI.value.PDFPCC_DETINC==true){
+       this.generaPdf();
+     }   
+     if(this.formCI.value.EMAILPCC_DETINC==true){
+       this.envioEmail();
+     }   
+    
+
+  }
+
+
+  envioUTE(){
+
+    alert("Envio UTE Ok");
+
+  }
+
+  generaPdf(){
+   
+    alert("Generación Pdf Ok");
+
+  }
+
+  envioEmail(){
+
+    alert("Envio Email Ok");
+
+  }
 
 
 

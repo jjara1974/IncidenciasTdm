@@ -22,7 +22,8 @@ export class RelciComponent implements OnInit {
   public incidencias: any //Incidencia[]=[];
   public totalItems: number;
   public page: number;
-  previousPage: number;
+  public pageSize: number;
+  //previousPage: number;
   showPagination: boolean;
 
   constructor(private route: ActivatedRoute,private servicioCi: ServiciociService,private config: NgbPaginationConfig,private router: Router) {
@@ -30,8 +31,9 @@ export class RelciComponent implements OnInit {
   }
 
   ngOnInit() {
-	this.page =1;
-	this.previousPage =1;
+  this.page =1;
+  this.pageSize=10;
+	//this.previousPage =1;
   this.fillIncidencias(this.page);
   }
   
@@ -44,11 +46,11 @@ export class RelciComponent implements OnInit {
 			}
 			else {
 			  this.incidencias = data;
-			  this.totalItems = data.totalAmount;
+			  this.totalItems = data.length ;//data.totalAmount;
 			  this.showPagination = true;
       }
       
-
+       console.log("Paginacion-> " + data.totalAmount)
       
     /*  this.incidencias=data;
       this.incidencias.forEach(e=>{
@@ -61,13 +63,13 @@ export class RelciComponent implements OnInit {
 		  }
 		);
   }
-  
-  loadPage(page: number) {
+ 
+ /* loadPage(page: number) {
     if (page !== this.previousPage) {
       this.previousPage = page;
       this.fillIncidencias(this.page-1);
     }
-  }
+  }*/
 
 
   
@@ -87,6 +89,11 @@ export class RelciComponent implements OnInit {
  
    }
 
+
+editar(incidencia:Incidencia){
+  alert("pepepepepep");
+  this.router.navigate(['formci', incidencia]);
+}
 
 
 

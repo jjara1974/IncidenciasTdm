@@ -1,7 +1,33 @@
-<h1>{{formCI.value.COD_DETINC}}</h1>
+
+
 <form id="FormCIId" [formGroup]="formCI" (ngSubmit)="submet()"> 
-<div class="card">
-  <div class="card-header font-weight-bold ">Alta de Incidencias</div>
+<div class="card col-12">
+  <div class="card-header font-weight-bold row ">
+    <div class=" alert-success col-3">
+      {{titulo}}  {{formCI.value.COD_DETINC}}
+    </div>
+  <div class="row justify-content-center col-9">
+    <div class="custom-control custom-switch col-2 ">
+      <input type="checkbox" class="form-control custom-control-input" value="0" id="utepcc_detinc" formControlName="UTEPCC_DETINC">
+      <label class="custom-control-label" for="utepcc_detinc"> UTE/Alstom</label>
+    </div>
+    <div class="custom-control custom-switch col-2">
+      <input type="checkbox" class="form-control custom-control-input" value="0"  id="pdfpcc_detinc" formControlName="PDFPCC_DETINC">
+      <label class="custom-control-label" for="pdfpcc_detinc">Pdf</label>
+    </div>
+    <div class="custom-control custom-switch col-2">
+      <input type="checkbox" class=" form-control custom-control-input"  value="0"  id="emailpcc_detinc" formControlName="EMAILPCC_DETINC">
+      <label class="custom-control-label" for="emailpcc_detinc">Email</label>
+    </div>
+
+    
+    <!--<div class="custom-control custom-switch col-2">
+      <input type="checkbox" class=" form-control custom-control-input"  value="0"  id="emailpcc_detinc" formControlName="EMAILPCC_DETINC">
+      <label class="custom-control-label" for="emailpcc_detinc">Email</label>
+    </div>-->
+  </div>
+   
+  </div>
   <div class="card-body ">
    
    
@@ -110,10 +136,34 @@
   </div>
   <div class="card-footer">
     <div class="form-group">
-      <button type="submit" class="btn btn-primary  btn btn-danger ">Guardar</button>
-      <button type="submit" class="btn btn-primary  btn btn-danger ">Cancelar</button>
+      <!--<button type="submit" class="btn btn-primary "  data-toggle="modal" data-target="#ModalGuardaCi">Guardar</button>-->
+      <button type="submit" class="btn btn-primary " >Guardar</button>
+      <button type="button" class="btn btn-primary  btn btn-danger " routerLink="relci">Cancelar</button>
+      <button type="button" class="btn btn-primary" (click)="nuevaCi()" >Nueva Incidencia</button>
     </div>
   </div>
 </div>
 
 </form>
+
+
+
+<ng-template #ModalGuardaCi let-modal>  
+<!--<div class="modal fade" id="ModalGuardaCi" tabindex="-1" role="dialog" aria-labelledby="ModalGuardaCiLabel" aria-hidden="true">-->
+
+<div class="modal-dialog"  role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="ModalLiveLabel">Tramitar CI</h5>
+    </div>
+    <div class="modal-body">
+      <p>Confirme que desea tramitar la CI o guardar los cambios.</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('salir')">Cerrar</button>
+      <button type="button" class="btn btn-primary" (click)="guardarCi()" (click)="modal.close('cerrar')" data-dismiss="modal">Guardar cambios</button>
+    </div>
+  </div>
+<!--</div>-->
+</div>
+</ng-template>
